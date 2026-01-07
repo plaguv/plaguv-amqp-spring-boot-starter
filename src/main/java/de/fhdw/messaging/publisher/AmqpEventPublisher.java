@@ -1,6 +1,6 @@
-package de.fhdw.messaging.utility;
+package de.fhdw.messaging.publisher;
 
-import de.fhdw.messaging.config.AmqpProperties;
+import de.fhdw.messaging.config.properties.AmqpProperties;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.stereotype.Component;
 
@@ -16,11 +16,5 @@ public class AmqpEventPublisher implements EventPublisher {
     }
 
     @Override
-    public void publish(Object o) {
-        rabbitTemplate.convertAndSend(
-                amqpProperties.getExchange(),
-                "",
-                o
-        );
-    }
+    public void publish(Object o) {}
 }

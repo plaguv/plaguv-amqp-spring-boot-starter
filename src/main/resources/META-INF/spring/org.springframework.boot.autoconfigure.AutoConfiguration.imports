@@ -1,1 +1,3 @@
-de.fhdw.messaging.config.AmqpAutoConfiguration
+de.fhdw.messaging.config.autoconfiguration.AmqpAutoConfiguration
+de.fhdw.messaging.config.autoconfiguration.AmqpPublisherAutoConfiguration
+de.fhdw.messaging.config.autoconfiguration.AmqpListenerAutoConfiguration

@@ -1,4 +1,4 @@
-package de.fhdw.messaging.utility;
+package de.fhdw.messaging.publisher;
 
 public interface EventPublisher {
     void publish(Object o);
