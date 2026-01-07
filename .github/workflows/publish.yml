@@ -25,4 +25,4 @@ jobs:
           server-password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Deploy to GitHub Packages
-        run: mvn deploy
+        run: mvn deploy -e -X
