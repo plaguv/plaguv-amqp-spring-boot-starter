@@ -1,1 +1,1 @@
-# messaging-amqp-starter
+# Messaging AMQP Starter
