@@ -4,7 +4,7 @@
 
     <groupId>de.fhdw</groupId>
     <artifactId>messaging-amqp-starter</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0.0</version>
     <packaging>jar</packaging>
 
     <name>Messaging AMQP Starter</name>

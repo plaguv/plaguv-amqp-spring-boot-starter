@@ -1,1 +1,1 @@
-# fhdw-messaging-amqp-starter
+# messaging-amqp-starter
