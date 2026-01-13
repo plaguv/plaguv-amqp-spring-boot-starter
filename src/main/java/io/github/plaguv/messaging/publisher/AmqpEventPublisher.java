@@ -29,7 +29,7 @@ public class AmqpEventPublisher implements EventPublisher {
     }
 
     @Override
-    public void publish(EventEnvelope<?> eventEnvelope) {
+    public void publishMessage(EventEnvelope<?> eventEnvelope) {
         if (eventEnvelope == null) {
             throw new IllegalArgumentException("eventEnvelope cannot be null");
         }

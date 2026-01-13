@@ -12,9 +12,9 @@ import tools.jackson.databind.ObjectMapper;
 
 @AutoConfiguration(after = AmqpAutoConfiguration.class)
 @EnableConfigurationProperties(AmqpProperties.class)
-public class AmqpPublisherAutoConfiguration {
+public class AmqpEventPublisherAutoConfiguration {
 
-    public AmqpPublisherAutoConfiguration() {}
+    public AmqpEventPublisherAutoConfiguration() {}
 
     @Bean
     @ConditionalOnMissingBean(EventPublisher.class)
