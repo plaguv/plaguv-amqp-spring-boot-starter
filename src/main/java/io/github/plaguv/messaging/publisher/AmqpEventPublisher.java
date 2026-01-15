@@ -29,23 +29,11 @@ public class AmqpEventPublisher implements EventPublisher {
     }
 
     @Override
-    public void publishMessage(EventEnvelope<?> eventEnvelope) {
-        if (eventEnvelope == null) {
-            throw new IllegalArgumentException("eventEnvelope cannot be null");
-        }
+    public void publishMessage(EventEnvelope eventEnvelope) {
 
-        try {
-            rabbitTemplate.send(
-                    amqpProperties.getExchange(eventEnvelope.metadata().eventScope()),
-                    eventEnvelope.metadata().eventType().eventRoutingKey(),
-                    buildMessage(eventEnvelope)
-            );
-        } catch (Exception exception) {
-            log.atError().log("Failed to publish event {}: {}", eventEnvelope.metadata().eventId(), exception.getMessage(), exception);
-        }
     }
 
-    private Message buildMessage(EventEnvelope<?> eventEnvelope) {
+    private Message buildMessage(EventEnvelope eventEnvelope) {
         // Header
         MessageProperties props = new MessageProperties();
         // Mandatory
@@ -57,19 +45,15 @@ public class AmqpEventPublisher implements EventPublisher {
         // Optional
         props.setHeader(
                 "x-event-type",
-                eventEnvelope.metadata().eventType().name()
+                eventEnvelope.routing().eventType().name()
         );
         props.setHeader(
                 "x-event-domain",
-                eventEnvelope.metadata().eventType().eventDomain().name()
+                eventEnvelope.routing().eventType().getEventDomain().name()
         );
         props.setHeader(
                 "x-event-version",
                 eventEnvelope.metadata().eventVersion().toString()
-        );
-        props.setHeader(
-                "x-event-scope",
-                eventEnvelope.metadata().eventScope().name()
         );
         props.setHeader(
                 "x-producer",
