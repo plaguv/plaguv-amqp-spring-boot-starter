@@ -16,7 +16,7 @@ public class AmqpEventListenerAutoConfiguration {
 
     @Bean
     @ConditionalOnMissingBean(AmqpEventListenerRegistrar.class)
-    public AmqpEventListenerRegistrar amqpEventListenerRegistrar(AmqpAdmin amqpAdmin, AmqpProperties amqpProperties) {
-        return new AmqpEventListenerRegistrar(amqpAdmin, amqpProperties);
+    public AmqpEventListenerRegistrar amqpEventListenerRegistrar(AmqpAdmin amqpAdmin) {
+        return new AmqpEventListenerRegistrar(amqpAdmin);
     }
 }

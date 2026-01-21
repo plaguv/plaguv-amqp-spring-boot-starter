@@ -1,8 +1,8 @@
 package io.github.plaguv.messaging.config.autoconfiguration;
 
 import io.github.plaguv.messaging.config.properties.AmqpProperties;
-import io.github.plaguv.messaging.publisher.AmqpEventPublisher;
-import io.github.plaguv.messaging.publisher.EventPublisher;
+import io.github.plaguv.messaging.publisher.*;
+import org.springframework.amqp.rabbit.core.RabbitAdmin;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -18,7 +18,19 @@ public class AmqpEventPublisherAutoConfiguration {
 
     @Bean
     @ConditionalOnMissingBean(EventPublisher.class)
-    public EventPublisher eventPublisher(RabbitTemplate rabbitTemplate, AmqpProperties amqpProperties, ObjectMapper objectMapper) {
-        return new AmqpEventPublisher(rabbitTemplate, amqpProperties, objectMapper);
+    public EventPublisher eventPublisher(RabbitTemplate rabbitTemplate, TopologyDeclarer topologyDeclarer, EventRouter eventRouter, ObjectMapper objectMapper) {
+        return new AmqpEventPublisher(rabbitTemplate, topologyDeclarer, eventRouter, objectMapper);
+    }
+
+    @Bean
+    @ConditionalOnMissingBean(EventRouter.class)
+    public EventRouter eventRouter(AmqpProperties amqpProperties) {
+        return new AmqpEventRouter(amqpProperties);
+    }
+
+    @Bean
+    @ConditionalOnMissingBean(TopologyDeclarer.class)
+    public TopologyDeclarer topologyDeclarer(RabbitAdmin rabbitAdmin, EventRouter eventRouter) {
+        return new AmqpTopologyDeclarer(rabbitAdmin, eventRouter);
     }
 }

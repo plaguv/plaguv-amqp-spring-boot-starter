@@ -1,9 +1,9 @@
 package io.github.plaguv.messaging.publisher;
 
 import io.github.plaguv.contracts.common.EventEnvelope;
-import io.github.plaguv.messaging.config.properties.AmqpProperties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.amqp.AmqpException;
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.core.MessageProperties;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
@@ -19,18 +19,35 @@ public class AmqpEventPublisher implements EventPublisher {
     private static final Logger log = LoggerFactory.getLogger(AmqpEventPublisher.class);
 
     private final RabbitTemplate rabbitTemplate;
-    private final AmqpProperties amqpProperties;
+    private final TopologyDeclarer topologyDeclarer;
+    private final EventRouter eventRouter;
     private final ObjectMapper objectMapper;
 
-    public AmqpEventPublisher(RabbitTemplate rabbitTemplate, AmqpProperties amqpProperties, ObjectMapper objectMapper) {
+    public AmqpEventPublisher(RabbitTemplate rabbitTemplate, TopologyDeclarer topologyDeclarer, EventRouter eventRouter, ObjectMapper objectMapper) {
         this.rabbitTemplate = rabbitTemplate;
-        this.amqpProperties = amqpProperties;
+        this.topologyDeclarer = topologyDeclarer;
+        this.eventRouter = eventRouter;
         this.objectMapper = objectMapper;
     }
 
     @Override
     public void publishMessage(EventEnvelope eventEnvelope) {
+        if (eventEnvelope == null) {
+            throw new IllegalArgumentException("Parameter 'eventEnvelope' cannot be null");
+        }
+        try {
+            String exchange = eventRouter.resolveExchange(eventEnvelope);
+            String routingKey = eventRouter.resolveRoutingKey(eventEnvelope);
 
+            topologyDeclarer.declareExchangeIfAbsent(exchange, eventEnvelope);
+            rabbitTemplate.convertAndSend(
+                    exchange,
+                    routingKey,
+                    buildMessage(eventEnvelope)
+            );
+        } catch (AmqpException e) {
+            log.atError().log("Failed to send AMQP message", e);
+        }
     }
 
     private Message buildMessage(EventEnvelope eventEnvelope) {
@@ -62,7 +79,7 @@ public class AmqpEventPublisher implements EventPublisher {
         try {
             return new Message(objectMapper.writeValueAsBytes(eventEnvelope), props);
         } catch (JacksonException jacksonException) {
-            throw new IllegalStateException("Failed to serialize EventEnvelope: " + eventEnvelope.metadata().eventId(), jacksonException);
+            throw new IllegalStateException("Failed to serialize message", jacksonException);
         }
     }
 }
