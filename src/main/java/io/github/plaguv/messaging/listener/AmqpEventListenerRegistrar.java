@@ -41,9 +41,7 @@ public class AmqpEventListenerRegistrar implements
     }
 
     @Override
-    public Object postProcessAfterInitialization(Object bean, @NonNull String beanName)
-            throws BeansException {
-
+    public Object postProcessAfterInitialization(Object bean, @NonNull String beanName) throws BeansException {
         for (Method method : bean.getClass().getDeclaredMethods()) {
 
             AmqpListener listener = method.getAnnotation(AmqpListener.class);
@@ -55,6 +53,11 @@ public class AmqpEventListenerRegistrar implements
         return bean;
     }
 
+    @Override
+    public void setApplicationContext(@NonNull ApplicationContext applicationContext) throws BeansException {
+        this.applicationContext = applicationContext;
+    }
+
     private void registerListenerForEvent(Object bean, String beanName, Method method, EventType event) {
         if (endpointRegistrar == null) {
             throw new IllegalStateException("RabbitListenerEndpointRegistrar not initialized yet");
@@ -62,7 +65,7 @@ public class AmqpEventListenerRegistrar implements
 
         // TODO replace with actual envelope creation
         EventEnvelope envelope = null;
-        String queueName = eventRouter.resolveQueue(envelope);
+        String queueName = eventRouter.resolveQueue(event);
         topologyDeclarer.declareAllIfAbsent(envelope);
 
         MethodRabbitListenerEndpoint endpoint = new MethodRabbitListenerEndpoint();
@@ -72,15 +75,8 @@ public class AmqpEventListenerRegistrar implements
         endpoint.setId("%s#%s#%s".formatted(beanName, method.getName(), event.name()));
         endpoint.setExclusive(false);
 
-        RabbitListenerContainerFactory<?> factory =
-                applicationContext.getBean(RabbitListenerContainerFactory.class);
+        RabbitListenerContainerFactory<?> factory = applicationContext.getBean(RabbitListenerContainerFactory.class);
 
         endpointRegistrar.registerEndpoint(endpoint, factory);
-    }
-
-    @Override
-    public void setApplicationContext(@NonNull ApplicationContext applicationContext)
-            throws BeansException {
-        this.applicationContext = applicationContext;
     }
 }

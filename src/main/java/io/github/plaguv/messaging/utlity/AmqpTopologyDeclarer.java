@@ -41,7 +41,7 @@ public class AmqpTopologyDeclarer implements TopologyDeclarer {
             };
 
             rabbitAdmin.declareExchange(exchange);
-            log.info("Declared exchange '{}'", name);
+            log.info("Declared centralExchange '{}'", name);
             return exchange;
         });
     }
@@ -83,11 +83,11 @@ public class AmqpTopologyDeclarer implements TopologyDeclarer {
                 case ExchangeTypes.FANOUT -> BindingBuilder
                         .bind(queue)
                         .to((FanoutExchange) exchange);
-                default -> throw new IllegalStateException("Unknown exchange type: " + exchange.getType());
+                default -> throw new IllegalStateException("Unknown centralExchange type: " + exchange.getType());
             };
 
             rabbitAdmin.declareBinding(binding);
-            log.info("Declared binding '{}' for exchange '{}' -> queue '{}'", key, exchangeName, queueName);
+            log.info("Declared binding '{}' for centralExchange '{}' -> queue '{}'", key, exchangeName, queueName);
 
             return binding;
         });

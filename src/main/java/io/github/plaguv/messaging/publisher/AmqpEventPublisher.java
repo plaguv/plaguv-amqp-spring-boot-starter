@@ -2,7 +2,6 @@ package io.github.plaguv.messaging.publisher;
 
 import io.github.plaguv.contracts.common.EventEnvelope;
 import io.github.plaguv.messaging.utlity.EventRouter;
-import io.github.plaguv.messaging.utlity.TopologyDeclarer;
 import jakarta.annotation.Nonnull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,13 +21,11 @@ public class AmqpEventPublisher implements EventPublisher {
     private static final Logger log = LoggerFactory.getLogger(AmqpEventPublisher.class);
 
     private final RabbitTemplate rabbitTemplate;
-    private final TopologyDeclarer topologyDeclarer;
     private final EventRouter eventRouter;
     private final ObjectMapper objectMapper;
 
-    public AmqpEventPublisher(RabbitTemplate rabbitTemplate, TopologyDeclarer topologyDeclarer, EventRouter eventRouter, ObjectMapper objectMapper) {
+    public AmqpEventPublisher(RabbitTemplate rabbitTemplate, EventRouter eventRouter, ObjectMapper objectMapper) {
         this.rabbitTemplate = rabbitTemplate;
-        this.topologyDeclarer = topologyDeclarer;
         this.eventRouter = eventRouter;
         this.objectMapper = objectMapper;
     }
@@ -38,10 +35,6 @@ public class AmqpEventPublisher implements EventPublisher {
         try {
             String exchange = eventRouter.resolveExchange(eventEnvelope);
             String routingKey = eventRouter.resolveRoutingKey(eventEnvelope);
-
-            topologyDeclarer.declareExchangeIfAbsent(eventEnvelope);
-            topologyDeclarer.declareQueueIfAbsent(eventEnvelope);
-            topologyDeclarer.declareBindingIfAbsent(eventEnvelope);
 
             rabbitTemplate.convertAndSend(
                     exchange,
@@ -56,13 +49,13 @@ public class AmqpEventPublisher implements EventPublisher {
     private Message buildMessage(@Nonnull EventEnvelope eventEnvelope) {
         // Header
         MessageProperties props = new MessageProperties();
-        // Mandatory
+        // Mandatory Header Content
         props.setContentType(MessageProperties.CONTENT_TYPE_JSON);
-        props.setContentEncoding("utf-8");
+        props.setContentEncoding("utf-8" );
         props.setMessageId(eventEnvelope.metadata().eventId().toString());
         props.setCorrelationId(eventEnvelope.metadata().eventId().toString());
         props.setTimestamp(Date.from(eventEnvelope.metadata().occurredAt()));
-        // Optional
+        // Optional Header Content
         props.setHeader(
                 "x-event-type",
                 eventEnvelope.routing().eventType().name()
@@ -80,7 +73,10 @@ public class AmqpEventPublisher implements EventPublisher {
                 eventEnvelope.metadata().producer().getName()
         );
         try {
-            return new Message(objectMapper.writeValueAsBytes(eventEnvelope), props);
+            return new Message(
+                    objectMapper.writeValueAsBytes(eventEnvelope), // Write EventInstance into ByteStream as body
+                    props // header
+            );
         } catch (JacksonException jacksonException) {
             throw new IllegalStateException("Failed to serialize message", jacksonException);
         }

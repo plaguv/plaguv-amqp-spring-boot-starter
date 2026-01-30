@@ -1,8 +1,10 @@
 package io.github.plaguv.messaging.utlity;
 
 import io.github.plaguv.contracts.common.EventEnvelope;
+import io.github.plaguv.contracts.common.routing.EventType;
 import io.github.plaguv.messaging.config.properties.AmqpProperties;
 import jakarta.annotation.Nonnull;
+import org.jspecify.annotations.NonNull;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -16,17 +18,24 @@ public class AmqpEventRouter implements EventRouter {
 
     @Override
     public String resolveQueue(@Nonnull EventEnvelope eventEnvelope) {
+        return resolveQueue(
+                eventEnvelope.routing().eventType()
+        );
+    }
+
+    @Override
+    public String resolveQueue(@NonNull EventType eventType) {
         return "%s.%s.%s.queue".formatted(
-                amqpProperties.exchange(),
-                eventEnvelope.routing().eventType().getEventDomain().name().toLowerCase(),
-                eventEnvelope.routing().eventType().name().toLowerCase()
+                amqpProperties.centralExchange(),
+                eventType.getEventDomain().name().toLowerCase(),
+                eventType.name().toLowerCase()
         );
     }
 
     @Override
     public String resolveExchange(@Nonnull EventEnvelope eventEnvelope) {
         return "%s.%s.%s".formatted(
-                amqpProperties.exchange(),
+                amqpProperties.centralExchange(),
                 eventEnvelope.routing().eventType().getEventDomain().name().toLowerCase(),
                 eventEnvelope.routing().eventDispatchType().name().toLowerCase()
         );

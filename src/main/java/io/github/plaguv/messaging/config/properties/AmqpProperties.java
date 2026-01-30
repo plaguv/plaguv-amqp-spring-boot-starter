@@ -4,11 +4,11 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 
 @ConfigurationProperties(prefix = "amqp")
 public record AmqpProperties(
-    String exchange
+    String centralExchange
 ) {
     public AmqpProperties {
-        if (exchange == null || exchange.isBlank()) {
-            throw new IllegalArgumentException("Property 'amqp.exchange' cannot be null, empty, or blank");
+        if (centralExchange == null || centralExchange.isBlank()) {
+            throw new IllegalArgumentException("Property 'amqp.central-exchange' cannot be null or blank");
         }
     }
 }

@@ -1,6 +1,7 @@
 package io.github.plaguv.messaging.utlity;
 
 import io.github.plaguv.contracts.common.EventEnvelope;
+import io.github.plaguv.contracts.common.routing.EventType;
 import jakarta.annotation.Nonnull;
 
 public interface EventRouter {
@@ -14,8 +15,15 @@ public interface EventRouter {
     String resolveQueue(@Nonnull EventEnvelope eventEnvelope);
 
     /**
-     * @param eventEnvelope the instance of a message from which the exchange should be derived from
-     * @return the exchange of the event as a {@link String} in the form of: <br>
+     *
+     * @param eventType e
+     * @return e
+     */
+    String resolveQueue(@Nonnull EventType eventType);
+
+    /**
+     * @param eventEnvelope the instance of a message from which the centralExchange should be derived from
+     * @return the centralExchange of the event as a {@link String} in the form of: <br>
      * {@code <application>.<domain>.<dispatchType>} or <br>
      * {@code project.store.direct}
      */
