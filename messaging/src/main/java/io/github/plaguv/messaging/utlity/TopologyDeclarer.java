@@ -1,6 +1,6 @@
 package io.github.plaguv.messaging.utlity;
 
-import io.github.plaguv.contracts.common.EventEnvelope;
+import io.github.plaguv.contract.envelope.EventEnvelope;
 import jakarta.annotation.Nonnull;
 
 public interface TopologyDeclarer {

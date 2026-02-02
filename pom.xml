@@ -2,10 +2,16 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>4.1.0-M1</version>
+    </parent>
+
     <groupId>io.github.plaguv</groupId>
     <artifactId>messaging-amqp-starter</artifactId>
     <version>1.0.0-alpha-1</version>
-    <packaging>jar</packaging>
+    <packaging>pom</packaging>
 
     <name>Messaging AMQP Starter</name>
     <description>
@@ -13,6 +19,11 @@
         The starter autoconfigures and sets up default beans related to AMQP messaging services.
     </description>
     <url>https://github.com/plaguv/messaging-amqp-starter</url>
+
+    <modules>
+        <module>contract</module>
+        <module>messaging</module>
+    </modules>
 
     <licenses>
         <license>
@@ -30,40 +41,15 @@
     <developers>
         <developer>
             <id>plaguv</id>
-            <name>Erik</name>
+            <name>plaguv</name>
             <url>https://github.com/plaguv</url>
         </developer>
     </developers>
 
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <maven.compiler.release>17</maven.compiler.release>
-    </properties>
-
     <dependencies>
-        <dependency>
-            <groupId>io.github.plaguv</groupId>
-            <artifactId>messaging-amqp-contracts</artifactId>
-            <version>1.0.0-alpha-1</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-amqp</artifactId>
-            <version>4.0.1</version>
-        </dependency>
-
-        <dependency>
-            <groupId>tools.jackson.core</groupId>
-            <artifactId>jackson-databind</artifactId>
-            <version>3.0.3</version>
-        </dependency>
-
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-api</artifactId>
-            <version>6.1.0-M1</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
@@ -72,14 +58,7 @@
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.14.1</version>
-            </plugin>
-
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-source-plugin</artifactId>
-                <version>3.4.0</version>
                 <executions>
                     <execution>
                         <id>attach-sources</id>
@@ -93,7 +72,6 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
-                <version>3.12.0</version>
                 <executions>
                     <execution>
                         <id>attach-javadocs</id>
@@ -114,7 +92,6 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-gpg-plugin</artifactId>
-                        <version>3.2.8</version>
                         <executions>
                             <execution>
                                 <id>sign-artifacts</id>
@@ -129,7 +106,6 @@
                     <plugin>
                         <groupId>org.sonatype.central</groupId>
                         <artifactId>central-publishing-maven-plugin</artifactId>
-                        <version>0.9.0</version>
                         <extensions>true</extensions>
                         <configuration>
                             <publishingServerId>central</publishingServerId>
