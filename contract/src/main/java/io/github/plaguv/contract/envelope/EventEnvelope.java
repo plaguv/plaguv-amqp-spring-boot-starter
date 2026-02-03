@@ -5,20 +5,21 @@ import io.github.plaguv.contract.envelope.metadata.EventMetadata;
 import io.github.plaguv.contract.envelope.metadata.EventVersion;
 import io.github.plaguv.contract.envelope.routing.EventDispatchType;
 import io.github.plaguv.contract.envelope.routing.EventRouting;
+import jakarta.annotation.Nonnull;
 
 import java.time.Instant;
 import java.util.UUID;
 
 public record EventEnvelope(
         EventMetadata metadata,
-        EventRouting eventRouting,
+        EventRouting routing,
         EventInstance payload
 ) {
     public EventEnvelope {
         if (metadata == null) {
             throw new IllegalArgumentException("EventEnvelope attribute 'metadata' cannot be null");
         }
-        if (eventRouting == null) {
+        if (routing == null) {
             throw new IllegalArgumentException("EventEnvelope attribute 'routing' cannot be null");
         }
         if (payload == null) {
@@ -32,12 +33,14 @@ public record EventEnvelope(
 
     public static final class Builder {
 
-        private UUID eventId;
-        private EventVersion eventVersion;
-        private Instant occurredAt;
+        // Default values
+        private UUID eventId = UUID.randomUUID();
+        private EventVersion eventVersion = EventVersion.valueOf(1);
+        private Instant occurredAt = Instant.now();
         private Class<?> producer;
 
-        private EventDispatchType eventDispatchType;
+        private EventDispatchType eventDispatchType = EventDispatchType.FANOUT;
+        private String eventWildcard = "";
 
         private EventInstance payload;
 
@@ -76,14 +79,20 @@ public record EventEnvelope(
 
         public Builder ofRouting(EventRouting eventRouting) {
             if (eventRouting == null) {
-                throw new IllegalArgumentException("EventRouting attribute 'eventRouting' cannot be null");
+                throw new IllegalArgumentException("EventRouting attribute 'routing' cannot be null");
             }
             this.eventDispatchType = eventRouting.eventDispatchType();
+            this.eventWildcard = eventRouting.eventWildcard();
             return this;
         }
 
         public Builder withEventDispatchType(EventDispatchType eventDispatchType) {
             this.eventDispatchType = eventDispatchType;
+            return this;
+        }
+
+        public Builder withWildcard(String eventWildcard) {
+            this.eventWildcard = eventWildcard;
             return this;
         }
 
@@ -93,23 +102,17 @@ public record EventEnvelope(
         }
 
         public EventEnvelope build() {
-            EventMetadata metadata;
+            EventMetadata metadata = new EventMetadata(
+                    eventId,
+                    eventVersion,
+                    occurredAt,
+                    producer
+            );
 
-            if (eventId == null && occurredAt == null) {
-                metadata = new EventMetadata(
-                        eventVersion,
-                        producer
-                );
-            } else {
-                metadata = new EventMetadata(
-                  eventId,
-                  eventVersion,
-                  occurredAt,
-                  producer
-                );
-            }
-
-            EventRouting routing = new EventRouting(eventDispatchType);
+            EventRouting routing = new EventRouting(
+                    eventDispatchType,
+                    eventWildcard
+            );
 
             return new EventEnvelope(
                     metadata,
@@ -117,5 +120,14 @@ public record EventEnvelope(
                     payload
             );
         }
+    }
+
+    @Override
+    public @Nonnull String toString() {
+        return "EventEnvelope{" +
+                "metadata=" + metadata +
+                ", routing=" + routing +
+                ", payload=" + payload +
+                '}';
     }
 }

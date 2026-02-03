@@ -1,8 +1,7 @@
-package io.github.plaguv.contract.envelope;
+package io.github.plaguv.contract.envelope.payload;
 
 public enum EventDomain {
     STORE,
-    CASHIER,
     PAYMENT,
     LOGISTIC
 }

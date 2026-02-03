@@ -58,11 +58,12 @@ public class AmqpEventPublisher implements EventPublisher {
         // Optional Header Content
         props.setHeader(
                 "x-event-type",
-                eventEnvelope.routing().eventType().name()
+                eventEnvelope.payload().getClass().getSimpleName().replaceAll("(?<!^)([A-Z])", "_$1").toLowerCase()
+                // This transforms differentiating cases to have an underscore. StoreClosedEvent -> store_closed_event
         );
         props.setHeader(
                 "x-event-domain",
-                eventEnvelope.routing().eventType().getEventDomain().name()
+                eventEnvelope.payload().getEventDomain().name().toLowerCase()
         );
         props.setHeader(
                 "x-event-version",

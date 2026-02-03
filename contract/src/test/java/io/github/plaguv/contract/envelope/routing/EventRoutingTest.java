@@ -13,5 +13,33 @@ class EventRoutingTest {
                 () -> new EventRouting(null));
         Assertions.assertThrows(IllegalArgumentException.class,
                 () -> new EventRouting(null, null));
+        Assertions.assertThrows(IllegalArgumentException.class,
+                () -> EventRouting.valueOf(null));
+        Assertions.assertThrows(IllegalArgumentException.class,
+                () -> EventRouting.valueOf(null, null));
+    }
+
+    @Test
+    @DisplayName("Constructor should keep field values")
+    void constructorKeepsParameters() {
+        String wildcard = "topic";
+        EventDispatchType eventDispatchType = EventDispatchType.FANOUT;
+        EventRouting eventRouting;
+
+        eventRouting = new EventRouting(eventDispatchType, wildcard);
+        Assertions.assertEquals(eventDispatchType, eventRouting.eventDispatchType());
+        Assertions.assertEquals(wildcard, eventRouting.eventWildcard());
+
+        eventRouting = new EventRouting(eventDispatchType);
+        Assertions.assertEquals(eventDispatchType, eventRouting.eventDispatchType());
+        Assertions.assertNotEquals(wildcard, eventRouting.eventWildcard());
+
+        eventRouting = EventRouting.valueOf(eventDispatchType, wildcard);
+        Assertions.assertEquals(eventDispatchType, eventRouting.eventDispatchType());
+        Assertions.assertEquals(wildcard, eventRouting.eventWildcard());
+
+        eventRouting = EventRouting.valueOf(eventDispatchType);
+        Assertions.assertEquals(eventDispatchType, eventRouting.eventDispatchType());
+        Assertions.assertNotEquals(wildcard, eventRouting.eventWildcard());
     }
 }

@@ -6,6 +6,8 @@ import org.junit.jupiter.api.Test;
 
 class EventVersionTest {
 
+    private EventVersion eventVersion;
+
     @Test
     @DisplayName("Constructor should reject negative numbers for major, minor and patch")
     void throwsOnNegativeNumbers() {
@@ -20,8 +22,6 @@ class EventVersionTest {
     @Test
     @DisplayName("Should default to zero, if number isn't present")
     void defaultsToZero() {
-        EventVersion eventVersion;
-
         eventVersion = new EventVersion(1);
         Assertions.assertEquals(1, eventVersion.major());
         Assertions.assertEquals(0, eventVersion.minor());
@@ -33,6 +33,82 @@ class EventVersionTest {
         Assertions.assertEquals(0, eventVersion.patch());
 
         eventVersion = new EventVersion(1, 2, 3);
+        Assertions.assertEquals(1, eventVersion.major());
+        Assertions.assertEquals(2, eventVersion.minor());
+        Assertions.assertEquals(3, eventVersion.patch());
+    }
+
+    @Test
+    @DisplayName("Should return a correct EventVersion via the valueOf(int) method")
+    void valueOfIntParses() {
+        eventVersion = EventVersion.valueOf(1);
+        Assertions.assertEquals(1, eventVersion.major());
+        Assertions.assertEquals(0, eventVersion.minor());
+        Assertions.assertEquals(0, eventVersion.patch());
+
+        eventVersion = EventVersion.valueOf(1, 2);
+        Assertions.assertEquals(1, eventVersion.major());
+        Assertions.assertEquals(2, eventVersion.minor());
+        Assertions.assertEquals(0, eventVersion.patch());
+
+        eventVersion = EventVersion.valueOf(1,2, 3);
+        Assertions.assertEquals(1, eventVersion.major());
+        Assertions.assertEquals(2, eventVersion.minor());
+        Assertions.assertEquals(3, eventVersion.patch());
+    }
+
+    @Test
+    @DisplayName("Should throw an exception when an invalid format gets input")
+    void valueOfStringThrows() {
+        Assertions.assertThrows(IllegalArgumentException.class,
+                () -> EventVersion.valueOf("a"));
+        Assertions.assertThrows(IllegalArgumentException.class,
+                () -> EventVersion.valueOf("1a"));
+        Assertions.assertThrows(IllegalArgumentException.class,
+                () -> EventVersion.valueOf("1.a"));
+        Assertions.assertThrows(IllegalArgumentException.class,
+                () -> EventVersion.valueOf("1.."));
+        Assertions.assertThrows(IllegalArgumentException.class,
+                () -> EventVersion.valueOf("1.1;1"));
+        Assertions.assertThrows(IllegalArgumentException.class,
+                () -> EventVersion.valueOf("1.1.1.1"));
+        Assertions.assertThrows(IllegalArgumentException.class,
+                () -> EventVersion.valueOf("-1"));
+        Assertions.assertThrows(IllegalArgumentException.class,
+                () -> EventVersion.valueOf(null));
+        Assertions.assertThrows(IllegalArgumentException.class,
+                () -> EventVersion.valueOf(" "));
+    }
+
+    @Test
+    @DisplayName("Should return a correct EventVersion via the valueOf(string) method")
+    void valueOfStringParses() {
+        eventVersion = EventVersion.valueOf("1");
+        Assertions.assertEquals(1, eventVersion.major());
+        Assertions.assertEquals(0, eventVersion.minor());
+        Assertions.assertEquals(0, eventVersion.patch());
+
+        eventVersion = EventVersion.valueOf("1.2");
+        Assertions.assertEquals(1, eventVersion.major());
+        Assertions.assertEquals(2, eventVersion.minor());
+        Assertions.assertEquals(0, eventVersion.patch());
+
+        eventVersion = EventVersion.valueOf("1.2.3");
+        Assertions.assertEquals(1, eventVersion.major());
+        Assertions.assertEquals(2, eventVersion.minor());
+        Assertions.assertEquals(3, eventVersion.patch());
+
+        eventVersion = EventVersion.valueOf("1_2_3");
+        Assertions.assertEquals(1, eventVersion.major());
+        Assertions.assertEquals(2, eventVersion.minor());
+        Assertions.assertEquals(3, eventVersion.patch());
+
+        eventVersion = EventVersion.valueOf("1-2-3");
+        Assertions.assertEquals(1, eventVersion.major());
+        Assertions.assertEquals(2, eventVersion.minor());
+        Assertions.assertEquals(3, eventVersion.patch());
+
+        eventVersion = EventVersion.valueOf("1;2;3");
         Assertions.assertEquals(1, eventVersion.major());
         Assertions.assertEquals(2, eventVersion.minor());
         Assertions.assertEquals(3, eventVersion.patch());

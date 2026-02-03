@@ -1,3 +1,7 @@
 package io.github.plaguv.contract.envelope.payload;
 
-public interface EventInstance {}
+import jakarta.annotation.Nonnull;
+
+public interface EventInstance {
+    @Nonnull EventDomain getEventDomain();
+}

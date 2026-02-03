@@ -5,7 +5,7 @@ import io.github.plaguv.contract.envelope.payload.EventInstance;
 import io.github.plaguv.contract.envelope.metadata.EventMetadata;
 import io.github.plaguv.contract.envelope.metadata.EventVersion;
 import io.github.plaguv.contract.envelope.routing.EventDispatchType;
-import io.github.plaguv.contract.envelope.payload.StoreOpenedEvent;
+import io.github.plaguv.contract.envelope.payload.pos.StoreOpenedEvent;
 import io.github.plaguv.contract.envelope.routing.EventRouting;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -88,7 +88,7 @@ class EventEnvelopeTest {
                 .build();
 
         Assertions.assertEquals(metadata, eventEnvelope.metadata());
-        Assertions.assertEquals(routing, eventEnvelope.eventRouting());
+        Assertions.assertEquals(routing, eventEnvelope.routing());
         Assertions.assertEquals(payload, eventEnvelope.payload());
     }
 
@@ -108,9 +108,10 @@ class EventEnvelopeTest {
     @DisplayName("Builder should construct with minimal parameters")
     void builderConstructsWithMinimalValues() {
         metadata = new EventMetadata( // As opposed to providing the full metadata, with attributes eventId and occurredAt specified
-                new EventVersion(1),
+                EventVersion.valueOf(1),
                 EventEnvelopeTest.class
         );
+
         Assertions.assertDoesNotThrow(() ->
                 EventEnvelope.builder()
                         .ofMetadata(metadata)

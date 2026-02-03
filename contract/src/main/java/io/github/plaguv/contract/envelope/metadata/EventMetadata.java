@@ -1,5 +1,7 @@
 package io.github.plaguv.contract.envelope.metadata;
 
+import jakarta.annotation.Nonnull;
+
 import java.time.Instant;
 import java.util.UUID;
 
@@ -33,8 +35,17 @@ public record EventMetadata(
         );
     }
 
+    public EventMetadata(Class<?> producer) {
+        this(
+                UUID.randomUUID(),
+                EventVersion.valueOf(1),
+                Instant.now(),
+                producer
+        );
+    }
+
     @Override
-    public String toString() {
+    public @Nonnull String toString() {
         return "EventMetadata{" +
                 "eventId=" + eventId +
                 ", eventVersion=" + eventVersion +

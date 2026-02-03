@@ -20,7 +20,7 @@ public class AmqpEventRouter implements EventRouter {
 
     @Override
     public String resolveQueue(@Nonnull EventEnvelope eventEnvelope) {
-//        return resolveQueue(eventEnvelope.eventRouting().eventType());
+//        return resolveQueue(eventEnvelope.routing().eventType());
         return "";
     }
 
