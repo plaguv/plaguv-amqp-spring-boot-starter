@@ -1,9 +1,7 @@
 package io.github.plaguv.messaging.publisher;
 
 import io.github.plaguv.contract.envelope.EventEnvelope;
-import io.github.plaguv.contract.envelope.metadata.EventVersion;
 import io.github.plaguv.contract.envelope.payload.Event;
-import io.github.plaguv.contract.envelope.payload.EventDomain;
 import io.github.plaguv.contract.envelope.routing.EventRoutingDescriptor;
 import io.github.plaguv.messaging.utlity.helper.ClassNameExtractor;
 import io.github.plaguv.messaging.utlity.EventRouter;
@@ -76,7 +74,7 @@ public class AmqpEventPublisher implements EventPublisher {
         );
         try {
             return new Message(
-                    objectMapper.writeValueAsBytes(eventEnvelope), // Write EventInstance into ByteStream as body
+                    objectMapper.writeValueAsBytes(eventEnvelope),
                     props // header
             );
         } catch (JacksonException jacksonException) {

@@ -8,11 +8,9 @@ import jakarta.annotation.Nonnull;
 
 public class AmqpEventRouter implements EventRouter {
 
-    private final String CENTRAL_EXCHANGE;
     private final String CENTRAL_APPLICATION;
 
     public AmqpEventRouter(AmqpProperties amqpProperties) {
-        CENTRAL_EXCHANGE = amqpProperties.centralExchange().toLowerCase();
         CENTRAL_APPLICATION = amqpProperties.centralApplication().toLowerCase();
     }
 

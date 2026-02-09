@@ -85,7 +85,7 @@ An event recognized by the starter is easy to setup. Simply create a class and a
 
 
 The Annotation generally only requires the events domain. The events version (if ommited) will start at `1.0.0`. 
-The versioning can also be written as `1_0_0` or `1-0-0`'
+The versioning can also be written as '1', '1.0', '1.0.0', '1_0_0', '1-0-0' or '1;0;0''
 
 Everything else can be freely stylized, such as validation. Do make sure that your class is compatible with `jackson-databind` 3+ serialization.
 Otherwise, the message cannot be sent.
@@ -119,18 +119,14 @@ At minimum, each EventEnvelope builder requires a producer and a payload.
 Payloads can be any object that have the `@Event` annotation.
 
 ````java
-EventInstance eventInstance = new StoreOpenedEvent(5L);
+// eventPublisher is a spring-managed bean that is automatically set by the autoconfiguration. Import via constructor injection or @Autowiring
+EventPublisher eventPublisher;
+
+StoreOpenedEvent storeOpenedEvent = new StoreOpenedEvent(5L);
 EventEnvelope envelope = EventEnvelope.builder()
-//        .ofMetadata()
-//        .withEventId()
-//        .withOccuredAt()
-//        .withProducer()
-//        .ofEventRouting()
-//        .withScope()
-        .ofPayload(eventInstance)
+        .ofPayload(storeOpenedEvent)
         .build();
 
-// publisher is a spring-managed bean of type `EventPublisher`.
 eventPublisher.publishMessage(envelope);
 ````
 

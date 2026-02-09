@@ -1,7 +1,6 @@
 package io.github.plaguv.contract.utility;
 
 import io.github.plaguv.contract.envelope.payload.EventDomain;
-import io.github.plaguv.contract.envelope.payload.EventInstance;
 import io.github.plaguv.contract.envelope.routing.EventScope;
 
 public final class WildcardStringBuilder {
@@ -18,8 +17,6 @@ public final class WildcardStringBuilder {
 
         private Builder() {}
 
-
-
         public Builder withSeparator(char separator) {
             return this;
         }
@@ -29,14 +26,6 @@ public final class WildcardStringBuilder {
         }
 
         public Builder withScope(EventScope eventScope) {
-            return this;
-        }
-
-        public Builder withTarget(EventInstance eventInstance) {
-            return this;
-        }
-
-        public Builder withTarget(Class<? extends EventInstance> target) {
             return this;
         }
 

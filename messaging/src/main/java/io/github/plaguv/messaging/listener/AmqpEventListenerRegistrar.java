@@ -2,7 +2,6 @@ package io.github.plaguv.messaging.listener;
 
 import io.github.plaguv.contract.envelope.payload.Event;
 import io.github.plaguv.contract.envelope.payload.EventDomain;
-import io.github.plaguv.contract.envelope.payload.EventInstance;
 import io.github.plaguv.contract.envelope.routing.EventScope;
 import io.github.plaguv.contract.envelope.routing.EventRoutingDescriptor;
 import io.github.plaguv.messaging.utlity.EventRouter;
@@ -52,7 +51,7 @@ public class AmqpEventListenerRegistrar implements EventListenerRegistrar, Rabbi
             return;
         }
 
-        Class<? extends EventInstance> eventClass = discoverer.getListeners().get(method);
+        Class<?> eventClass = discoverer.getListeners().get(method);
         EventDomain eventDomain = eventClass.getAnnotation(Event.class).domain();
 
         EventRoutingDescriptor eventRoutingDescriptor = new EventRoutingDescriptor(
@@ -60,6 +59,10 @@ public class AmqpEventListenerRegistrar implements EventListenerRegistrar, Rabbi
                 eventDomain,
                 EventScope.BROADCAST
         );
+
+        topologyDeclarer.declareQueueIfAbsent(eventRoutingDescriptor);
+        topologyDeclarer.declareExchangeIfAbsent(eventRoutingDescriptor);
+        topologyDeclarer.declareBindingIfAbsent(eventRoutingDescriptor);
 
         String queue = eventRouter.resolveQueue(eventRoutingDescriptor);
 
@@ -75,6 +78,6 @@ public class AmqpEventListenerRegistrar implements EventListenerRegistrar, Rabbi
                 factory
         );
 
-        log.atInfo().log("Registered listener for %s", method.getName());
+        log.atInfo().log("Registered listener for '{}'", method.getName());
     }
 }

@@ -7,7 +7,6 @@ import io.github.plaguv.contract.envelope.routing.EventRouting;
 import jakarta.annotation.Nonnull;
 
 import java.time.Instant;
-import java.util.Optional;
 import java.util.UUID;
 
 public record EventEnvelope(
@@ -26,7 +25,7 @@ public record EventEnvelope(
             throw new IllegalArgumentException("EventEnvelope attribute 'payload' cannot be null");
         }
         if (!payload.getClass().isAnnotationPresent(Event.class)) {
-            throw new IllegalArgumentException("EventEnvelope attribute 'payload' must be annotated with @Event");
+            throw new IllegalArgumentException("EventEnvelope attribute 'payload' must be annotated with @Event. Received '%s'.".formatted(payload.getClass()));
         }
     }
 
@@ -94,6 +93,9 @@ public record EventEnvelope(
         }
 
         public Builder ofPayload(Object payload) {
+            if (payload == null) {
+                throw new IllegalArgumentException("EventPayload attribute 'payload' cannot be null");
+            }
             this.payload = payload;
             return this;
         }
