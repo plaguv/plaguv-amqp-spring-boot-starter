@@ -23,8 +23,8 @@ public class AmqpEventRouter implements EventRouter {
     public @Nonnull String resolveQueue(@Nonnull EventEnvelope eventEnvelope) {
         return "%s.%s.%s.queue".formatted(
                 amqpProperties.centralApplication(),
-                eventEnvelope.payload().type().getAnnotation(Event.class).domain().name().toLowerCase(),
-                ClassNameExtractor.extractUpperLower(eventEnvelope.payload().type())
+                eventEnvelope.payload().contentType().getAnnotation(Event.class).domain().name().toLowerCase(),
+                ClassNameExtractor.extractUpperLower(eventEnvelope.payload().contentType())
         );
     }
 
@@ -38,8 +38,8 @@ public class AmqpEventRouter implements EventRouter {
     @Override
     public @Nonnull String resolveRoutingKey(@Nonnull EventEnvelope eventEnvelope) {
         return "%s.%s".formatted(
-                eventEnvelope.payload().type().getAnnotation(Event.class).domain().name().toLowerCase(),
-                ClassNameExtractor.extractUpperLower(eventEnvelope.payload().type())
+                eventEnvelope.payload().contentType().getAnnotation(Event.class).domain().name().toLowerCase(),
+                ClassNameExtractor.extractUpperLower(eventEnvelope.payload().contentType())
         ).concat(createScopingSuffix(eventEnvelope));
     }
 
@@ -49,8 +49,8 @@ public class AmqpEventRouter implements EventRouter {
         for (EventScope eventScope : EventScope.values()) {
             bindings.add(
                     "%s.%s".formatted(
-                            eventEnvelope.payload().type().getAnnotation(Event.class).domain().name().toLowerCase(),
-                            ClassNameExtractor.extractUpperLower(eventEnvelope.payload().type())
+                            eventEnvelope.payload().contentType().getAnnotation(Event.class).domain().name().toLowerCase(),
+                            ClassNameExtractor.extractUpperLower(eventEnvelope.payload().contentType())
                     ).concat(createScopingSuffix(eventScope, amqpProperties.centralApplication())));
         }
         return bindings;

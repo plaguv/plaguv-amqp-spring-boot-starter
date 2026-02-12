@@ -103,10 +103,10 @@ class EventEnvelopeTest {
                 .withEventId(eventMetadata.eventId())
                 .withOccurredAt(eventMetadata.occurredAt())
                 .withProducer(eventMetadata.producer())
-                .withEventScope(eventRouting.scope())
+                .withScope(eventRouting.scope())
                 .withWildcard(eventRouting.wildcard())
-                .withPayloadType(eventPayload.type())
-                .withPayload(eventPayload.payload())
+                .withContentType(eventPayload.contentType())
+                .withContent(eventPayload.content())
                 .build();
 
         Assertions.assertEquals(eventMetadata, eventEnvelope.metadata());

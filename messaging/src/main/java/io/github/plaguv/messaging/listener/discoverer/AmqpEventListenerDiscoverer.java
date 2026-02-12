@@ -49,7 +49,7 @@ public class AmqpEventListenerDiscoverer implements EventListenerDiscoverer {
 
             annotatedMethods.keySet().stream()
                     .filter(this::isValidListenerMethod)
-                    .map(method -> new Listener(method.getDeclaringClass(), method, method.getParameters()[0]))
+                    .map(method -> new Listener(beanName, method, method.getParameters()[0]))
                     .forEach(listeners::add);
         }
 

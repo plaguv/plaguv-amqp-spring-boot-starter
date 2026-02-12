@@ -34,7 +34,7 @@ class EventPayloadTest {
     }
 
     @Test
-    @DisplayName("Constructor accepts empty payloads that at least have a type specified")
+    @DisplayName("Constructor accepts empty payloads that at least have a contentType specified")
     void constructorAcceptsEmptyPayloads() {
         Assertions.assertDoesNotThrow(
                 () -> new EventPayload(payloadType, null));
@@ -57,7 +57,7 @@ class EventPayloadTest {
     }
 
     @Test
-    @DisplayName("Constructor should only accept parameters that point towards the same event (type/payload)")
+    @DisplayName("Constructor should only accept parameters that point towards the same event (contentType/content)")
     void acceptsOnlyMatchingEvents() {
         Assertions.assertThrows(IllegalArgumentException.class,
                 () -> new EventPayload(StoreClosedEvent.class, payload));

@@ -21,7 +21,7 @@ public record EventEnvelope(
             throw new IllegalArgumentException("EventEnvelope attribute 'routing' cannot be null");
         }
         if (payload == null) {
-            throw new IllegalArgumentException("EventEnvelope attribute 'payload' cannot be null");
+            throw new IllegalArgumentException("EventEnvelope attribute 'content' cannot be null");
         }
     }
 
@@ -46,12 +46,12 @@ public record EventEnvelope(
         private Class<?> producer;
 
         // EventRouting fields
-        private EventScope eventScope;
-        private String eventWildcard;
+        private EventScope scope;
+        private String wildcard;
 
         // EventPayload fields
-        private Class<?> payloadType;
-        private Object payload;
+        private Class<?> type;
+        private Object content;
 
         private Builder() {
         }
@@ -85,18 +85,18 @@ public record EventEnvelope(
             if (eventRouting == null) {
                 throw new IllegalArgumentException("Parameter 'eventRouting' cannot be null");
             }
-            this.eventScope = eventRouting.scope();
-            this.eventWildcard = eventRouting.wildcard();
+            this.scope = eventRouting.scope();
+            this.wildcard = eventRouting.wildcard();
             return this;
         }
 
-        public Builder withEventScope(EventScope eventScope) {
-            this.eventScope = eventScope;
+        public Builder withScope(EventScope scope) {
+            this.scope = scope;
             return this;
         }
 
-        public Builder withWildcard(String eventWildcard) {
-            this.eventWildcard = eventWildcard;
+        public Builder withWildcard(String wildcard) {
+            this.wildcard = wildcard;
             return this;
         }
 
@@ -104,18 +104,18 @@ public record EventEnvelope(
             if (eventPayload == null) {
                 throw new IllegalArgumentException("Parameter 'eventPayload' cannot be null");
             }
-            this.payloadType = eventPayload.type();
-            this.payload = eventPayload.payload();
+            this.type = eventPayload.contentType();
+            this.content = eventPayload.content();
             return this;
         }
 
-        public Builder withPayload(Object payload) {
-            this.payload = payload;
+        public Builder withContent(Object content) {
+            this.content = content;
             return this;
         }
 
-        public Builder withPayloadType(Class<?> payloadType) {
-            this.payloadType = payloadType;
+        public Builder withContentType(Class<?> type) {
+            this.type = type;
             return this;
         }
 
@@ -127,13 +127,13 @@ public record EventEnvelope(
             );
 
             EventRouting eventRouting = new EventRouting(
-                    eventScope,
-                    eventWildcard
+                    scope,
+                    wildcard
             );
 
             EventPayload eventPayload = new EventPayload(
-                    payloadType,
-                    payload
+                    type,
+                    content
             );
 
             return new EventEnvelope(

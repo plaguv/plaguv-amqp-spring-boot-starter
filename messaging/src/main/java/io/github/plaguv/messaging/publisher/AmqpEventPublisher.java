@@ -55,16 +55,16 @@ public class AmqpEventPublisher implements EventPublisher {
         props.setTimestamp(Date.from(eventEnvelope.metadata().occurredAt()));
         // Optional Header Content
         props.setHeader(
-                "x-event-type",
-                ClassNameExtractor.extractUpperLower(eventEnvelope.payload().type())
+                "x-event-contentType",
+                ClassNameExtractor.extractUpperLower(eventEnvelope.payload().contentType())
         );
         props.setHeader(
                 "x-event-domain",
-                eventEnvelope.payload().getClass().getAnnotation(Event.class).domain().name().toLowerCase()
+                eventEnvelope.payload().contentType().getAnnotation(Event.class).domain().name().toLowerCase()
         );
         props.setHeader(
                 "x-event-version",
-                eventEnvelope.payload().getClass().getAnnotation(Event.class).version()
+                eventEnvelope.payload().contentType().getAnnotation(Event.class).version()
         );
         props.setHeader(
                 "x-producer",

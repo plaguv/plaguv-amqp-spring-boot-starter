@@ -3,21 +3,21 @@ package io.github.plaguv.contract.envelope.payload;
 import io.github.plaguv.contract.event.Event;
 
 public record EventPayload(
-        Class<?> type,
-        Object payload
+        Class<?> contentType,
+        Object content
 ) {
     public EventPayload {
-        if (type == null) {
-            throw new IllegalArgumentException("EventPayload attribute 'type' cannot be null");
+        if (contentType == null) {
+            throw new IllegalArgumentException("EventPayload attribute 'contentType' cannot be null");
         }
-        if (!type.isAnnotationPresent(Event.class)) {
-            throw new IllegalArgumentException("EventPayload attribute 'type' is not annotated with @Event");
+        if (!contentType.isAnnotationPresent(Event.class)) {
+            throw new IllegalArgumentException("EventPayload attribute 'contentType' is not annotated with @Event");
         }
-        if (payload != null && !payload.getClass().isAnnotationPresent(Event.class)) {
-            throw new IllegalArgumentException("EventPayload attribute 'payload' is not annotated with @Event");
+        if (content != null && !content.getClass().isAnnotationPresent(Event.class)) {
+            throw new IllegalArgumentException("EventPayload attribute 'content' is not annotated with @Event");
         }
-        if (payload != null && payload.getClass() != type) {
-            throw new IllegalArgumentException("EventPayload attribute 'payload' is not of the type attribute 'type' specified");
+        if (content != null && content.getClass() != contentType) {
+            throw new IllegalArgumentException("EventPayload attribute 'content' is not of the contentType attribute 'contentType' specified");
         }
     }
 
@@ -27,7 +27,7 @@ public record EventPayload(
 
     public static EventPayload valueOf(Object payload) {
         if (payload == null) {
-            throw new IllegalArgumentException("Parameter 'payload' cannot be null");
+            throw new IllegalArgumentException("Parameter 'content' cannot be null");
         }
         return new EventPayload(
                 payload.getClass(),

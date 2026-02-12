@@ -45,8 +45,8 @@ public record EventVersion(
             throw new IllegalArgumentException("Parameter 'version' cannot be null or blank");
         }
 
-        // Regex allows patterns of type: '1', '1.0', '1.0.0', '1_0_0', '1-0-0', '1;0;0'
-        // Regex disallows patterns of type: '1_0;0', '1..0', '1.0.0.0', '1.a.0,
+        // Regex allows patterns of contentType: '1', '1.0', '1.0.0', '1_0_0', '1-0-0', '1;0;0'
+        // Regex disallows patterns of contentType: '1_0;0', '1..0', '1.0.0.0', '1.a.0,
         Pattern p = Pattern.compile("^(\\d+)(?:([._\\-;])(\\d+)(?:\\2(\\d+))?)?$");
         Matcher m = p.matcher(version.trim());
 

@@ -4,6 +4,7 @@ import io.github.plaguv.messaging.config.properties.AmqpProperties;
 import io.github.plaguv.messaging.config.properties.AmqpStartupProperties;
 import io.github.plaguv.messaging.utlity.AmqpEventRouter;
 import io.github.plaguv.messaging.utlity.EventRouter;
+import org.springframework.amqp.rabbit.annotation.EnableRabbit;
 import org.springframework.boot.amqp.autoconfigure.RabbitAutoConfiguration;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -14,6 +15,7 @@ import tools.jackson.databind.json.JsonMapper;
 
 @AutoConfiguration(after = RabbitAutoConfiguration.class)
 @EnableConfigurationProperties({AmqpProperties.class, AmqpStartupProperties.class})
+@EnableRabbit
 public class AmqpAutoConfiguration {
 
     public AmqpAutoConfiguration() {}

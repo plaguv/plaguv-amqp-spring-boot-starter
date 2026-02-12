@@ -68,7 +68,7 @@ class AmqpEventRouterTest {
         );
 
         eventEnvelope = EventEnvelope.builderWithDefaults()
-                .withEventScope(EventScope.GROUP)
+                .withScope(EventScope.GROUP)
                 .withWildcard("cashier")
                 .ofEventPayload(EventPayload.valueOf(storeOpenedEvent))
                 .build();
@@ -78,7 +78,7 @@ class AmqpEventRouterTest {
         );
 
         eventEnvelope = EventEnvelope.builderWithDefaults()
-                .withEventScope(EventScope.TARGET)
+                .withScope(EventScope.TARGET)
                 .withWildcard("cashier")
                 .ofEventPayload(EventPayload.valueOf(storeOpenedEvent))
                 .build();
