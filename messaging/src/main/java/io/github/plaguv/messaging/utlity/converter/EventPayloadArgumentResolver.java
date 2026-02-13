@@ -26,7 +26,8 @@ public class EventPayloadArgumentResolver implements HandlerMethodArgumentResolv
     @Override
     public @Nullable Object resolveArgument(@NonNull MethodParameter parameter, @NonNull Message<?> message) throws MessageConversionException {
         try {
-                return objectMapper.readValue((byte[]) message.getPayload(), EventPayload.class);
+            EventPayload eventPayload = objectMapper.readValue((byte[]) message.getPayload(), EventPayload.class);
+            return eventPayload.contentType().cast(eventPayload.content());
         } catch (MessageConversionException e) {
             throw new MessageConversionException("Could not convert payload to EventPayload", e);
         }
