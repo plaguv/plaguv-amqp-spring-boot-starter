@@ -5,44 +5,57 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>4.1.0-M1</version>
+        <version>4.0.0</version>
     </parent>
 
     <groupId>io.github.plaguv</groupId>
-    <artifactId>messaging-amqp-spring-boot-starter</artifactId>
-    <version>1.0.0-alpha-1</version>
+    <artifactId>plaguv-amqp</artifactId>
+    <version>1.0.0</version>
     <packaging>pom</packaging>
 
-    <name>Messaging AMQP Spring Boot Starter</name>
-    <description>
-        A Module designed to serve as a messaging starter for Spring Boots AMQP.
-        The starter autoconfigures and sets up default beans related to AMQP messaging services.
-    </description>
-    <url>https://github.com/plaguv/messaging-amqp-spring-boot-starter</url>
-
     <modules>
-        <module>contract</module>
-        <module>messaging</module>
+        <module>plaguv-amqp-contract</module>
+        <module>plaguv-amqp-core</module>
+        <module>plaguv-amqp-spring-boot-starter</module>
     </modules>
+
+    <name>Plaguv AMQP Parent</name>
+    <description>
+        Parent POM for the Plaguv AMQP project.
+        Provides dependency management, plugin configuration, and module aggregation.
+    </description>
+
+    <properties>
+        <license.name>Apache License 2.0</license.name>
+        <license.url>https://www.apache.org/licenses/LICENSE-2.0.txt</license.url>
+
+        <scm.connection>scm:git:https://github.com/plaguv/plaguv-amqp-spring-boot-starter.git</scm.connection>
+        <scm.developerConnection>scm:git:ssh://github.com/plaguv/plaguv-amqp-spring-boot-starter.git
+        </scm.developerConnection>
+        <scm.url>https://github.com/plaguv/plaguv-amqp-spring-boot-starter</scm.url>
+
+        <developer.name>plaguv</developer.name>
+        <developer.url>https://github.com/plaguv</developer.url>
+    </properties>
 
     <licenses>
         <license>
-            <name>Apache License 2.0</name>
-            <url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <name>${license.name}</name>
+            <url>${license.url}</url>
         </license>
     </licenses>
 
     <scm>
-        <connection>scm:git:https://github.com/plaguv/messaging-amqp-spring-boot-starter.git</connection>
-        <developerConnection>scm:git:ssh://github.com/plaguv/messaging-amqp-spring-boot-starter.git</developerConnection>
-        <url>https://github.com/plaguv/messaging-amqp-spring-boot-starter</url>
+        <connection>${scm.connection}</connection>
+        <developerConnection>${scm.developerConnection}</developerConnection>
+        <url>${scm.url}</url>
     </scm>
 
     <developers>
         <developer>
-            <id>plaguv</id>
-            <name>plaguv</name>
-            <url>https://github.com/plaguv</url>
+            <id>${developer.name}</id>
+            <name>${developer.name}</name>
+            <url>${developer.url}</url>
         </developer>
     </developers>
 
@@ -84,6 +97,7 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-gpg-plugin</artifactId>
+                        <version>3.2.8</version>
                         <executions>
                             <execution>
                                 <id>sign-artifacts</id>
@@ -99,6 +113,7 @@
                         <groupId>org.sonatype.central</groupId>
                         <artifactId>central-publishing-maven-plugin</artifactId>
                         <extensions>true</extensions>
+                        <version>0.10.0</version>
                         <configuration>
                             <publishingServerId>central</publishingServerId>
                         </configuration>

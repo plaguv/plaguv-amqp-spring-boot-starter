@@ -1,0 +1,3 @@
+io.github.plaguv.starter.autoconfigure.AmqpAutoConfiguration
+io.github.plaguv.starter.autoconfigure.AmqpEventPublisherAutoConfiguration
+io.github.plaguv.starter.autoconfigure.AmqpEventListenerAutoConfiguration

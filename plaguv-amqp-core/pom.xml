@@ -1,0 +1,76 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>io.github.plaguv</groupId>
+        <artifactId>plaguv-amqp</artifactId>
+        <version>1.0.0</version>
+    </parent>
+
+    <artifactId>plaguv-amqp-core</artifactId>
+    <packaging>jar</packaging>
+
+    <name>Plaguv AMQP Core</name>
+    <description>
+        Core messaging implementation built on RabbitMQ,
+        providing the runtime infrastructure for the Plaguv AMQP framework.
+    </description>
+
+    <licenses>
+        <license>
+            <name>${license.name}</name>
+            <url>${license.url}</url>
+        </license>
+    </licenses>
+
+    <scm>
+        <connection>${scm.connection}</connection>
+        <developerConnection>${scm.developerConnection}</developerConnection>
+        <url>${scm.url}</url>
+    </scm>
+
+    <developers>
+        <developer>
+            <id>${developer.name}</id>
+            <name>${developer.name}</name>
+            <url>${developer.url}</url>
+        </developer>
+    </developers>
+
+    <dependencies>
+        <dependency>
+            <groupId>io.github.plaguv</groupId>
+            <artifactId>contract</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>tools.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-amqp</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-validation</artifactId>
+            <scope>compile</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+</project>

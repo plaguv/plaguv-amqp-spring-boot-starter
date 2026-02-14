@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>io.github.plaguv</groupId>
+        <artifactId>plaguv-amqp</artifactId>
+        <version>1.0.0</version>
+    </parent>
+
+    <artifactId>plaguv-amqp-spring-boot-starter</artifactId>
+    <packaging>jar</packaging>
+
+    <name>Plaguv AMQP Spring Boot Starter</name>
+    <description>
+        An opinionated Spring Boot starter for standardized, annotation-driven
+        AMQP messaging built on RabbitMQ.
+    </description>
+
+    <licenses>
+        <license>
+            <name>${license.name}</name>
+            <url>${license.url}</url>
+        </license>
+    </licenses>
+
+    <scm>
+        <connection>${scm.connection}</connection>
+        <developerConnection>${scm.developerConnection}</developerConnection>
+        <url>${scm.url}</url>
+    </scm>
+
+    <developers>
+        <developer>
+            <id>${developer.name}</id>
+            <name>${developer.name}</name>
+            <url>${developer.url}</url>
+        </developer>
+    </developers>
+
+    <dependencies>
+        <dependency>
+            <groupId>io.github.plaguv</groupId>
+            <artifactId>plaguv-amqp-contract</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>io.github.plaguv</groupId>
+            <artifactId>plaguv-amqp-core</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+    </dependencies>
+</project>

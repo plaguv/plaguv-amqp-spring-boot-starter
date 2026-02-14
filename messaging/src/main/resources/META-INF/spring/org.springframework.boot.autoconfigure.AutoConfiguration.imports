@@ -1,3 +1,0 @@
-io.github.plaguv.messaging.config.autoconfiguration.AmqpAutoConfiguration
-io.github.plaguv.messaging.config.autoconfiguration.AmqpEventPublisherAutoConfiguration
-io.github.plaguv.messaging.config.autoconfiguration.AmqpEventListenerAutoConfiguration
