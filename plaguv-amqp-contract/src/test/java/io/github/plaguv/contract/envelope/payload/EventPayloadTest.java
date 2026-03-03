@@ -1,7 +1,7 @@
 package io.github.plaguv.contract.envelope.payload;
 
-import io.github.plaguv.contract.event.pos.StoreClosedEvent;
-import io.github.plaguv.contract.event.pos.StoreOpenedEvent;
+import io.github.plaguv.contract.event.pos.LogisticArticleOrderEvent;
+import io.github.plaguv.contract.event.pos.LogisticArticleUrgentOrderEvent;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -14,8 +14,8 @@ class EventPayloadTest {
 
     @BeforeEach
     void beforeEach() {
-        payloadType = StoreOpenedEvent.class;
-        payload = new StoreOpenedEvent(5L);
+        payloadType = LogisticArticleOrderEvent.class;
+        payload = new LogisticArticleOrderEvent(1, 1, 1);
     }
 
     @Test
@@ -63,7 +63,7 @@ class EventPayloadTest {
         Assertions.assertThrows(IllegalArgumentException.class,
                 () -> EventPayload.empty(Object.class));
         Assertions.assertDoesNotThrow(
-                () -> EventPayload.empty(StoreOpenedEvent.class));
+                () -> EventPayload.empty(LogisticArticleOrderEvent.class));
 
         Assertions.assertThrows(IllegalArgumentException.class,
                 () -> EventPayload.valueOf(new Object()));
@@ -75,7 +75,7 @@ class EventPayloadTest {
     @DisplayName("Constructor should only accept parameters that point towards the same event (contentType/content)")
     void constructorAcceptsOnlyMatchingEventContent() {
         Assertions.assertThrows(IllegalArgumentException.class,
-                () -> new EventPayload(StoreClosedEvent.class, payload));
+                () -> new EventPayload(LogisticArticleUrgentOrderEvent.class, payload));
 
         Assertions.assertDoesNotThrow(
                 () -> new EventPayload(payloadType, payload));

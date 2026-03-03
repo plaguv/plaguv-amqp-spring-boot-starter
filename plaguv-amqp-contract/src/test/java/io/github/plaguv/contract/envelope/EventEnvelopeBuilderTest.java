@@ -4,7 +4,7 @@ import io.github.plaguv.contract.envelope.metadata.EventMetadata;
 import io.github.plaguv.contract.envelope.payload.EventPayload;
 import io.github.plaguv.contract.envelope.routing.EventRouting;
 import io.github.plaguv.contract.envelope.routing.EventScope;
-import io.github.plaguv.contract.event.pos.StoreOpenedEvent;
+import io.github.plaguv.contract.event.pos.LogisticArticleOrderEvent;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -23,7 +23,7 @@ class EventEnvelopeBuilderTest {
                 EventScope.BROADCAST,
                 null
         );
-        eventPayload = EventPayload.valueOf(new StoreOpenedEvent(5L));
+        eventPayload = EventPayload.valueOf(new LogisticArticleOrderEvent(1, 1, 1));
     }
 
     @Test
