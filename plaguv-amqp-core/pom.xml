@@ -4,12 +4,11 @@
 
     <parent>
         <groupId>io.github.plaguv</groupId>
-        <artifactId>plaguv-amqp</artifactId>
-        <version>1.0.0</version>
+        <artifactId>plaguv-amqp-parent</artifactId>
+        <version>1.2.0</version>
     </parent>
 
     <artifactId>plaguv-amqp-core</artifactId>
-    <version>1.1.1</version>
     <packaging>jar</packaging>
 
     <name>Plaguv AMQP Core</name>
@@ -42,8 +41,7 @@
     <dependencies>
         <dependency>
             <groupId>io.github.plaguv</groupId>
-            <artifactId>plaguv-amqp-contract</artifactId>
-            <version>1.1.0</version>
+            <artifactId>plaguv-amqp-api</artifactId>
         </dependency>
 
         <dependency>

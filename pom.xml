@@ -5,12 +5,12 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>4.0.0</version>
+        <version>4.0.3</version>
     </parent>
 
     <groupId>io.github.plaguv</groupId>
-    <artifactId>plaguv-amqp</artifactId>
-    <version>1.0.0</version>
+    <artifactId>plaguv-amqp-parent</artifactId>
+    <version>1.2.0</version>
     <packaging>pom</packaging>
 
     <modules>
@@ -24,19 +24,6 @@
         Parent POM for the Plaguv AMQP project.
         Provides dependency management, plugin configuration, and module aggregation.
     </description>
-
-    <properties>
-        <license.name>Apache License 2.0</license.name>
-        <license.url>https://www.apache.org/licenses/LICENSE-2.0.txt</license.url>
-
-        <scm.connection>scm:git:https://github.com/plaguv/plaguv-amqp-spring-boot-starter.git</scm.connection>
-        <scm.developerConnection>scm:git:ssh://github.com/plaguv/plaguv-amqp-spring-boot-starter.git
-        </scm.developerConnection>
-        <scm.url>https://github.com/plaguv/plaguv-amqp-spring-boot-starter</scm.url>
-
-        <developer.name>plaguv</developer.name>
-        <developer.url>https://github.com/plaguv</developer.url>
-    </properties>
 
     <licenses>
         <license>
@@ -58,6 +45,41 @@
             <url>${developer.url}</url>
         </developer>
     </developers>
+
+    <properties>
+        <!-- Meta -->
+        <license.name>Apache License 2.0</license.name>
+        <license.url>https://www.apache.org/licenses/LICENSE-2.0.txt</license.url>
+        <scm.connection>scm:git:https://github.com/plaguv/plaguv-amqp-spring-boot-starter.git</scm.connection>
+        <scm.developerConnection>scm:git:ssh://github.com/plaguv/plaguv-amqp-spring-boot-starter.git</scm.developerConnection>
+        <scm.url>https://github.com/plaguv/plaguv-amqp-spring-boot-starter</scm.url>
+        <developer.name>plaguv</developer.name>
+        <developer.url>https://github.com/plaguv</developer.url>
+        <!-- Application -->
+        <plaguv.amqp.api.version>1.2.0</plaguv.amqp.api.version>
+        <plaguv.amqp.core.version>1.2.0</plaguv.amqp.core.version>
+        <plaguv.amqp.starter.version>1.2.0</plaguv.amqp.starter.version>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>io.github.plaguv</groupId>
+                <artifactId>plaguv-amqp-api</artifactId>
+                <version>${plaguv.amqp.api.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.github.plaguv</groupId>
+                <artifactId>plaguv-amqp-core</artifactId>
+                <version>${plaguv.amqp.api.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.github.plaguv</groupId>
+                <artifactId>plaguv-amqp-starter</artifactId>
+                <version>${plaguv.amqp.api.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
     <build>
         <plugins>
@@ -97,7 +119,6 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-gpg-plugin</artifactId>
-                        <version>3.2.8</version>
                         <executions>
                             <execution>
                                 <id>sign-artifacts</id>
@@ -113,7 +134,6 @@
                         <groupId>org.sonatype.central</groupId>
                         <artifactId>central-publishing-maven-plugin</artifactId>
                         <extensions>true</extensions>
-                        <version>0.10.0</version>
                         <configuration>
                             <publishingServerId>central</publishingServerId>
                         </configuration>
