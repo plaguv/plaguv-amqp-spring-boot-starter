@@ -10,19 +10,22 @@
 
     <groupId>io.github.plaguv</groupId>
     <artifactId>plaguv-amqp-parent</artifactId>
-    <version>1.2.0</version>
+    <version>1.3.0</version>
     <packaging>pom</packaging>
 
     <modules>
-        <module>plaguv-amqp-contract</module>
-        <module>plaguv-amqp-core</module>
-        <module>plaguv-amqp-spring-boot-starter</module>
+        <module>bom</module>
+        <module>api</module>
+        <module>core</module>
+        <module>starter</module>
     </modules>
 
-    <name>Plaguv AMQP Parent</name>
+    <name>
+        Plaguv AMQP Parent
+    </name>
     <description>
-        Parent POM for the Plaguv AMQP project.
-        Provides dependency management, plugin configuration, and module aggregation.
+        Parent POM for the Plaguv AMQP library.
+        Provides build and plugin configuration, as well as module aggregation.
     </description>
 
     <licenses>
@@ -55,28 +58,16 @@
         <scm.url>https://github.com/plaguv/plaguv-amqp-spring-boot-starter</scm.url>
         <developer.name>plaguv</developer.name>
         <developer.url>https://github.com/plaguv</developer.url>
-        <!-- Application -->
-        <plaguv.amqp.api.version>1.2.0</plaguv.amqp.api.version>
-        <plaguv.amqp.core.version>1.2.0</plaguv.amqp.core.version>
-        <plaguv.amqp.starter.version>1.2.0</plaguv.amqp.starter.version>
     </properties>
 
     <dependencyManagement>
         <dependencies>
             <dependency>
                 <groupId>io.github.plaguv</groupId>
-                <artifactId>plaguv-amqp-api</artifactId>
-                <version>${plaguv.amqp.api.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>io.github.plaguv</groupId>
-                <artifactId>plaguv-amqp-core</artifactId>
-                <version>${plaguv.amqp.api.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>io.github.plaguv</groupId>
-                <artifactId>plaguv-amqp-starter</artifactId>
-                <version>${plaguv.amqp.api.version}</version>
+                <artifactId>plaguv-amqp-bom</artifactId>
+                <version>${project.version}</version>
+                <scope>import</scope>
+                <type>pom</type>
             </dependency>
         </dependencies>
     </dependencyManagement>

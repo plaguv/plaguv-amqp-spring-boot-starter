@@ -34,7 +34,7 @@ Further details for configurations are available [here](.docs/CONFIGURATION.md)
     <dependency>
         <groupId>io.github.plaguv</groupId>
         <artifactId>plaguv-amqp-spring-boot-starter</artifactId>
-        <version>1.2.0</version>
+        <version>1.3.0</version>
     </dependency>
 </dependencies>
 ````
@@ -43,7 +43,7 @@ Further details for configurations are available [here](.docs/CONFIGURATION.md)
 
 ````gradle
 dependencies {
-    implementation 'io.github.plaguv:plaguv-amqp-spring-boot-starter:1.2.0'
+    implementation 'io.github.plaguv:plaguv-amqp-spring-boot-starter:1.3.0'
 }
 ````
 
