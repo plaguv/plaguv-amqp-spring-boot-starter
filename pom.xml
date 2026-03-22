@@ -3,29 +3,28 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-parent</artifactId>
-        <version>4.0.3</version>
+        <groupId>io.github.plaguv</groupId>
+        <artifactId>plaguv-amqp-build</artifactId>
+        <version>1.3.0</version>
     </parent>
 
-    <groupId>io.github.plaguv</groupId>
-    <artifactId>plaguv-amqp-parent</artifactId>
-    <version>1.3.0</version>
-    <packaging>pom</packaging>
-
     <modules>
+        <module>build</module>
         <module>bom</module>
         <module>api</module>
         <module>core</module>
         <module>starter</module>
     </modules>
 
+    <artifactId>plaguv-amqp-parent</artifactId>
+    <packaging>pom</packaging>
+
     <name>
         Plaguv AMQP Parent
     </name>
     <description>
         Parent POM for the Plaguv AMQP library.
-        Provides build and plugin configuration, as well as module aggregation.
+        Provides module aggregation.
     </description>
 
     <licenses>
@@ -49,17 +48,6 @@
         </developer>
     </developers>
 
-    <properties>
-        <!-- Meta -->
-        <license.name>Apache License 2.0</license.name>
-        <license.url>https://www.apache.org/licenses/LICENSE-2.0.txt</license.url>
-        <scm.connection>scm:git:https://github.com/plaguv/plaguv-amqp-spring-boot-starter.git</scm.connection>
-        <scm.developerConnection>scm:git:ssh://github.com/plaguv/plaguv-amqp-spring-boot-starter.git</scm.developerConnection>
-        <scm.url>https://github.com/plaguv/plaguv-amqp-spring-boot-starter</scm.url>
-        <developer.name>plaguv</developer.name>
-        <developer.url>https://github.com/plaguv</developer.url>
-    </properties>
-
     <dependencyManagement>
         <dependencies>
             <dependency>
@@ -71,66 +59,4 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
-
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-source-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>attach-sources</id>
-                        <goals>
-                            <goal>jar</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-javadoc-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>attach-javadocs</id>
-                        <goals>
-                            <goal>jar</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-        </plugins>
-    </build>
-
-    <profiles>
-        <profile>
-            <id>release</id>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-gpg-plugin</artifactId>
-                        <executions>
-                            <execution>
-                                <id>sign-artifacts</id>
-                                <phase>verify</phase>
-                                <goals>
-                                    <goal>sign</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
-
-                    <plugin>
-                        <groupId>org.sonatype.central</groupId>
-                        <artifactId>central-publishing-maven-plugin</artifactId>
-                        <extensions>true</extensions>
-                        <configuration>
-                            <publishingServerId>central</publishingServerId>
-                        </configuration>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-    </profiles>
 </project>
